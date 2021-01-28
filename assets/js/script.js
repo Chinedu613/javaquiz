@@ -76,17 +76,17 @@ playButtonEl.onclick = startQuiz;
         },
         {
             question: " What is 2 + 3?",
-            choices: [ "2","3","4", "5",],
+            choices: [ "z","6","90", "5",],
             answer: "5",
         },
         {
             question: " What is 2 + 1?",
-            choices: [ "2","3","4", "5",],
+            choices: [ "a","3","c", "f",],
             answer: "3",
         },
         {
             question: " What is 2 + 0?",
-            choices: [ "2","3","4", "5",],
+            choices: [ "2","1","y", "o",],
             answer: "2",
         },
     ];
@@ -106,20 +106,26 @@ playButtonEl.onclick = startQuiz;
 
     //ADDING CHOICES TO CHOICES CONTAINER
 
-        for(var i = 0; i < currentQuestion.choices.length; i++){
-        
-            var choiceButton = document.createElement("div");
+    
 
+        for(var i = 0; i < currentQuestion.choices.length; i++){
+            
+            var choiceButton = document.createElement("div");
+            
+            
             choiceButton.setAttribute("value", currentQuestion.choices[i]);
 
             choiceButton.textContent = currentQuestion.choices[i];
             
-            //Add logic to handle clicking the choice button
+            
             
             choicesEl.appendChild(choiceButton);
-            
-            choiceButton.onclick = answerBtn();
+//Add logic to handle clicking the choice button
+            choiceButton.onclick = answerBtn;
 
+
+            //choicesEl.removeChild(choiceButton);
+            
 
             console.log(questionsArr[indexCurrentQuestion].answer)
         }
@@ -129,19 +135,23 @@ playButtonEl.onclick = startQuiz;
             
     }
     
-
+    
     function answerBtn(){
         //if the value of the  (to access the answer willl be questionArr[indexCurrentQuestion].answer)
-        if (choiceButton.onclick === questionsArr[indexCurrentQuestion].answer) {
+       /*  if (choiceButton.onclick === questionsArr[indexCurrentQuestion].answer) {
             console.log(choiceButton);
             //answer is correct
             
         } else{
             timerCount-= 5;
-        }
-        if(currentQuestion < questionsArr.length){
-            currentQuestion++;
+        } */
+        if(indexCurrentQuestion < questionsArr.length){
+            
+            indexCurrentQuestion++;
+            
             getQuestions();
+            
+            console.log(indexCurrentQuestion)
         }
         // choice is equal to answer next question
 
@@ -165,3 +175,4 @@ playButtonEl.onclick = startQuiz;
         // appened score to text called from local storage
 
     }
+    
