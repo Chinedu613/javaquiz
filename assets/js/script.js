@@ -94,67 +94,66 @@ playButtonEl.onclick = startQuiz;
     
     
     ///LOOP FOR NEXT QUESTION
+    
     var indexCurrentQuestion = 0; 
 
     function getQuestions(){
         
+        //Clears  Questions at the end
+        questionTitleEl.innerHTML  = "";
+        //Clears Choices for new choices
+        choicesEl.innerHTML = "";
 
         currentQuestion = questionsArr[indexCurrentQuestion];
-
-    //ADDING QUESTION TO QUESTION BLOCK
+        
+        //ADDING QUESTION TO QUESTION BLOCK
         questionTitleEl.textContent = currentQuestion.question;
 
-    //ADDING CHOICES TO CHOICES CONTAINER
-
-    
-
+        
+        //ADDING CHOICES TO CHOICES CONTAINER
         for(var i = 0; i < currentQuestion.choices.length; i++){
+            //Create Choices Element
             
             var choiceButton = document.createElement("div");
-            
-            
+            //Adds value to the choices
+
             choiceButton.setAttribute("value", currentQuestion.choices[i]);
-
+            //Sets the choices to the questions
+            
             choiceButton.textContent = currentQuestion.choices[i];
-            
-            
-            
+            //Appends Choice Buttons to Choice Containers
+
             choicesEl.appendChild(choiceButton);
-//Add logic to handle clicking the choice button
+            
+    //Add logic to handle clicking the choice button
+            
             choiceButton.onclick = answerBtn;
-
-
             //choicesEl.removeChild(choiceButton);
             
-
-            console.log(questionsArr[indexCurrentQuestion].answer)
         }
-            console.log(choiceButton)
-                
-            
-            
+        
     }
-    
-    
-    function answerBtn(){
-        //if the value of the  (to access the answer willl be questionArr[indexCurrentQuestion].answer)
-       /*  if (choiceButton.onclick === questionsArr[indexCurrentQuestion].answer) {
-            console.log(choiceButton);
-            //answer is correct
-            
-        } else{
-            timerCount-= 5;
-        } */
-        if(indexCurrentQuestion < questionsArr.length){
-            
-            indexCurrentQuestion++;
-            
-            getQuestions();
-            
-            console.log(indexCurrentQuestion)
-        }
-        // choice is equal to answer next question
 
+    function answerBtn(){
+        
+        console.log(this)
+
+       /*  var clickedBtn = this.getAttribute("value"); */
+
+        if(this.value === currentQuestion.answer){
+        }
+        else {
+            timerCount -= 5;
+        }
+        if (indexCurrentQuestion < (questionsArr.length)) {
+            indexCurrentQuestion++;
+            getQuestions();
+        }
+        else {
+            gameOver()
+        }console.log(gameOver)
+        // choice is equal to answer next question
+        
         // if not reduce timer by 5 seconds timerCount -=5
 
 
@@ -162,6 +161,10 @@ playButtonEl.onclick = startQuiz;
        // gameOver()
     }
     function gameOver(){
+        questionTitleEl.innerHTML  = "";
+        choicesEl.innerHTML = "";
+        highscore = document.createElement("div")
+        choicesEl.appendChild(highscore)
         // High Score function to call high or call div to show highscore box
 
         // Clear Timer
