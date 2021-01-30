@@ -46,6 +46,9 @@ img {
 #question-block{
     display: none;
 }
+#setScore{
+    display: none;
+}
 #timer{
     color: white;
 }
