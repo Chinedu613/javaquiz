@@ -145,7 +145,7 @@ playButtonEl.onclick = startQuiz;
         else {
             timerCount -= 5;
         }
-        if (indexCurrentQuestion < (questionsArr.length)) {
+        if (indexCurrentQuestion < (questionsArr.length - 1)) {
             indexCurrentQuestion++;
             getQuestions();
         }
