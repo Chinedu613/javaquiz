@@ -49,6 +49,9 @@ img {
 #setScore{
     display: none;
 }
+#scoreBox{
+    display: none;
+}
 #timer{
     color: white;
 }

@@ -33,6 +33,15 @@
             questionBlockEl.style.display = "block";
         }
     }
+// Hide Questions Block
+function hideQuestions(){
+    var questionBlockEl = document.getElementById("question-block");
+    if (questionBlockEl.style.display === "none") {
+        questionBlockEl.style.display = "block";
+    } else{
+        questionBlockEl.style.display = "none";
+    }
+}
 //Hide Start Button
     function hideStart(){
         var homeEl = document.getElementById("home");
@@ -51,22 +60,24 @@
             setScoreEl.style.display = "block";
         }
     }
-
-    function hideQuestions(){
-        var questionBlockEl = document.getElementById("question-block");
-        if (questionBlockEl.style.display === "none") {
-            questionBlockEl.style.display = "block";
+    //Hide Highscore Input Container
+    function hideSetScore(){
+        var setScoreEl = document.getElementById("setScore");
+        if (setScoreEl.style.display === "none"){
+            setScoreEl.style.display = "block";
         } else{
-            questionBlockEl.style.display = "none";
+            setScoreEl.style.display = "none";
         }
     }
-    
-    //Hide Play Button
-    //Hide Questions
-
-
- //PLAY BUTTON
-
+    //Shows Highscore List Container
+    function showScores(){
+        var showScoresEl = document.getElementById("scoreBox");
+        if (showScoresEl.style.display === "block") {
+            showScoresEl.style.display = "none";
+        } else{
+            showScoresEl.style.display = "block";
+        }
+    }
     function startQuiz(){
         hideStart();
         questionBlock();
@@ -168,15 +179,13 @@ playButtonEl.onclick = startQuiz;
         }
         else {
             gameOver()
-        }console.log(gameOver)
-        // choice is equal to answer next question
-        
-        // if not reduce timer by 5 seconds timerCount -=5
-
-
+        }
         // indexCurrentQuestion = questionArr.length then go to  gameOver()
        // gameOver()
     }
+    var submitBtn = document.querySelector("#nameInput")
+    var playerInput = document.querySelector("#highScoreName")
+
     function gameOver(){
         //stops timer
         clearInterval(timerCount);
@@ -193,17 +202,34 @@ playButtonEl.onclick = startQuiz;
         // Set time to span
         time.textContent = scoreTime
         console.log(time)
-        // High Score function to call high or call div to show highscore box
 
-        // Clear Timer
+        //Submit Button function
+        submitBtn.addEventListener("click", function(event){
+            event.preventDefault();
+            
+            //Saves players name and timer as an object
+            saveScore()
+            //Hides the Highscore input box and adds highscore list
+            hideSetScore()
+            showScores()
+            //Appends name and score to list
+            var highScoreList = document.querySelector("ul");
+            var yourScore = document.createElement("ol");
+            var lastScore = JSON.parse(localStorage.getItem("player"));
+            
+            console.log(lastScore)
 
-        //Add text input box
-
-        //store text in local storage
-
-        // call text stored in local storage
-
-        // appened score to text called from local storage
-
+            yourScore.textContent = lastScore;
+            highScoreList.appendChild(yourScore);
+            console.log(yourScore)
+        })
     }
-    
+    //Saves players name and timer as an object
+    function saveScore(){
+        var player = {
+            playerName: playerInput.value.trim(),
+            playerScore: timerCount
+        };
+        
+        localStorage.setItem("player", JSON.stringify(player))
+    }

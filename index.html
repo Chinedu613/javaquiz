@@ -39,7 +39,6 @@
         </div>
         <div id="final">          
             <h1 id="game over"></h1>
-
         </div>
         <div id="setScore" class="container">
             <div class="row justify-content-md-center">
@@ -53,19 +52,25 @@
                     <form>
                         <div class="mb-3">
                         <label for="highscoreName" class="form-label">Name</label>
-    
-                        <input type="email" class="form-control" id="highscoreName" aria-describedby="emailHelp">
-    
+                        <input type="text" class="form-control" name="highScoreName"id="highScoreName" aria-describedby="high-score-name">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button id="nameInput" type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="scoreBox" class="container">
+            <div class="row justify-content-md-center">
+                <div class="card">
+                    <h5 class="card-title">High Scores</h5>
+                    <ul class="list-group list-group-flush">
+                    </ul>
+                </div>
+            </div>
+        </div>
     </main>
     <script src="./assets/js/script.js"></script>
-
 </body>
 </html>
