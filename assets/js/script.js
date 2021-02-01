@@ -7,7 +7,6 @@
     var choicesEl = document.getElementById("choices");
     // CHOICES
     var choiceButton = document.createElement("div");
-
     
     // Set Timer on Page 
     var timerCount = 120;
@@ -78,22 +77,17 @@ function hideQuestions(){
             showScoresEl.style.display = "block";
         }
     }
+    ////// Start FUNCTION///////////////////
     function startQuiz(){
         hideStart();
         questionBlock();
         setTimer();
         getQuestions();
     }
-    
-    //PLAY BUTTON
-
+    //PLAY BUTTON/////////////////////////
 playButtonEl.onclick = startQuiz;
-    
 
-
-
-
-//QUESTIONS ARRAY
+//QUESTIONS ARRAY////////////////////////
 
     var questionsArr = [
         {
@@ -118,55 +112,34 @@ playButtonEl.onclick = startQuiz;
         },
     ];
     
-    
-    
-    ///LOOP FOR NEXT QUESTION
-    
-    var indexCurrentQuestion = 0; 
+    ///LOOP FOR NEXT QUESTION//////////////////////////
+    var indexCurrentQuestion = 0;
 
     function getQuestions(){
-        
         //Clears  Questions at the end
         questionTitleEl.innerHTML  = "";
         //Clears Choices for new choices
         choicesEl.innerHTML = "";
-
+        //Get Current Question
         currentQuestion = questionsArr[indexCurrentQuestion];
-        
         //ADDING QUESTION TO QUESTION BLOCK
         questionTitleEl.textContent = currentQuestion.question;
-
-        
         //ADDING CHOICES TO CHOICES CONTAINER
         for(var i = 0; i < currentQuestion.choices.length; i++){
             //Create Choices Element
-            
             var choiceButton = document.createElement("div");
             //Adds value to the choices
-
             choiceButton.setAttribute("value", currentQuestion.choices[i]);
             //Sets the choices to the questions
-            
             choiceButton.textContent = currentQuestion.choices[i];
             //Appends Choice Buttons to Choice Containers
-
             choicesEl.appendChild(choiceButton);
-            
-    //Add logic to handle clicking the choice button
-            
+            //Add logic to handle clicking the choice button
             choiceButton.onclick = answerBtn;
-            //choicesEl.removeChild(choiceButton);
-            
         }
-        
     }
 
     function answerBtn(){
-        
-        console.log(this)
-
-       /*  var clickedBtn = this.getAttribute("value"); */
-
         if(this.value === currentQuestion.answer){
         }
         else {
@@ -180,29 +153,17 @@ playButtonEl.onclick = startQuiz;
         else {
             gameOver()
         }
-        // indexCurrentQuestion = questionArr.length then go to  gameOver()
-       // gameOver()
     }
-    var submitBtn = document.querySelector("#nameInput")
-    var playerInput = document.querySelector("#highScoreName")
+ 
+    
+/// What Happens on Enter Name part///////////////////////////////////
+var submitBtn = document.querySelector("#nameInput")
+var playerInput = document.querySelector("#highScoreName")
+var highScoreList = document.querySelector("ol");
+var lastScore = localStorage.getItem("player");
 
     function gameOver(){
-        //stops timer
-        clearInterval(timerCount);
-        // Saves timer to local storage
-        localStorage.setItem("timer", timerCount);
-        // Hides Questions
-        hideQuestions()
-        // Show Highscore Input Name block
-        setScore()
-        // Gets span to display score
-        time = document.querySelector("#count");
-        // Get timer from local storage
-        scoreTime =localStorage.getItem("timer");
-        // Set time to span
-        time.textContent = scoreTime
-        console.log(time)
-
+        almost()
         //Submit Button function
         submitBtn.addEventListener("click", function(event){
             event.preventDefault();
@@ -212,24 +173,64 @@ playButtonEl.onclick = startQuiz;
             //Hides the Highscore input box and adds highscore list
             hideSetScore()
             showScores()
+            //Shows History of players Scores
+            playerHistory()
+            renderPlayers()
             //Appends name and score to list
-            var highScoreList = document.querySelector("ul");
-            var yourScore = document.createElement("ol");
-            var lastScore = JSON.parse(localStorage.getItem("player"));
-            
-            console.log(lastScore)
-
-            yourScore.textContent = lastScore;
-            highScoreList.appendChild(yourScore);
-            console.log(yourScore)
         })
     }
-    //Saves players name and timer as an object
+
+/// Stop time and hide questions and enter name section also save timer to storage//////////
+    function almost(){
+        //stops timer
+        clearInterval(timerCount);
+        // Saves timer to local storage
+        localStorage.setItem("timer", timerCount);
+        // Hides Questions
+        hideQuestions()
+        setScore()
+        // Gets span to display score
+        time = document.querySelector("#count");
+        // Get timer from local storage
+        scoreTime =localStorage.getItem("timer");
+        // Set time to span
+        time.textContent = scoreTime
+        console.log(time)
+        }
+
+///// (saveScore) Save Scores into objects and then push to Array///////////////////
+    var allPlayers = []
+
     function saveScore(){
         var player = {
             playerName: playerInput.value.trim(),
             playerScore: timerCount
         };
+        allPlayers.push(player)
         
-        localStorage.setItem("player", JSON.stringify(player))
+        localStorage.setItem("player", JSON.stringify(allPlayers))
+    }
+    
+////// (renderPlayers) Show's player names on Highscore List Section/////////////
+    function renderPlayers(){
+        for(var i = 0; i < allPlayers.length; i++){
+            onePlayer = allPlayers[i];
+            console.log(onePlayer)
+
+            var yourScore = document.createElement("li");
+            console.log(yourScore)
+            yourScore.textContent = onePlayer.playerName + " " + onePlayer.playerScore;
+            console.log(onePlayer)
+            highScoreList.appendChild(yourScore);
+        }
+    }
+
+    function playerHistory(){
+        //Get player history
+        var storedPlayers = JSON.parse(localStorage.getItem("player"));
+        console.log(storedPlayers)
+        //
+        if(storedPlayers !== null){
+            allPlayers = storedPlayers
+        }
     }
