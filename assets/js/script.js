@@ -138,7 +138,7 @@ playButtonEl.onclick = startQuiz;
             choiceButton.onclick = answerBtn;
         }
     }
-
+////// What happens when you choose an answer///////////
     function answerBtn(){
         if(this.value === currentQuestion.answer){
         }
@@ -154,7 +154,6 @@ playButtonEl.onclick = startQuiz;
             gameOver()
         }
     }
- 
     
 /// What Happens on Enter Name part///////////////////////////////////
 var submitBtn = document.querySelector("#nameInput")
@@ -164,6 +163,9 @@ var lastScore = localStorage.getItem("player");
 
     function gameOver(){
         almost()
+        
+    
+
         //Submit Button function
         submitBtn.addEventListener("click", function(event){
             event.preventDefault();
@@ -199,9 +201,11 @@ var lastScore = localStorage.getItem("player");
         }
 
 ///// (saveScore) Save Scores into objects and then push to Array///////////////////
-    var allPlayers = []
+    //var allPlayers = []
 
     function saveScore(){
+        var allPlayers = JSON.parse(localStorage.getItem("player")) || []
+
         var player = {
             playerName: playerInput.value.trim(),
             playerScore: timerCount
@@ -213,24 +217,27 @@ var lastScore = localStorage.getItem("player");
     
 ////// (renderPlayers) Show's player names on Highscore List Section/////////////
     function renderPlayers(){
+        var allPlayers = JSON.parse(localStorage.getItem("player")) || []
+
         for(var i = 0; i < allPlayers.length; i++){
             onePlayer = allPlayers[i];
-            console.log(onePlayer)
+            
 
             var yourScore = document.createElement("li");
-            console.log(yourScore)
+        
             yourScore.textContent = onePlayer.playerName + " " + onePlayer.playerScore;
-            console.log(onePlayer)
+            
             highScoreList.appendChild(yourScore);
         }
     }
-
-    function playerHistory(){
+//// Should Show player History//////////////////////////////////////
+    function playerHistory(allPlayers){
         //Get player history
-        var storedPlayers = JSON.parse(localStorage.getItem("player"));
-        console.log(storedPlayers)
-        //
-        if(storedPlayers !== null){
-            allPlayers = storedPlayers
+        var allPlayers = JSON.parse(localStorage.getItem("player"));
+   
+
+        if(allPlayers !== null){
+            renderPlayers()
+            }else return 
         }
-    }
+    
